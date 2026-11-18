@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Syntax
+        shell: bash
+        run: for f in lib/*.mjs bin/*.mjs test/*.mjs; do node --check "$f"; done
+      - name: Price table is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('lib/prices.json','utf8'))"
+      - name: Tests
+        run: node test/smoke.mjs
+      - name: CLI runs with no transcripts
+        shell: bash
+        run: node bin/tokenlens.mjs --projects ./does-not-exist || test $? -eq 1
+      - name: Help and prices render
+        shell: bash
+        run: node bin/tokenlens.mjs --help && node bin/tokenlens.mjs prices

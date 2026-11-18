@@ -1,0 +1,17 @@
+{
+  "name": "tokenlens",
+  "version": "1.0.0",
+  "description": "Where did my Claude Code tokens go? Local, dependency-free token and cost analysis of your Claude Code transcripts.",
+  "type": "module",
+  "license": "MIT",
+  "author": "varun642002",
+  "bin": { "tokenlens": "bin/tokenlens.mjs" },
+  "homepage": "https://github.com/varun642002/tokenlens",
+  "repository": { "type": "git", "url": "https://github.com/varun642002/tokenlens.git" },
+  "bugs": { "url": "https://github.com/varun642002/tokenlens/issues" },
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node test/smoke.mjs", "start": "node bin/tokenlens.mjs" },
+  "keywords": ["claude", "claude-code", "tokens", "cost", "usage", "analytics", "cli", "llm", "ai"],
+  "files": ["bin", "lib", "README.md", "LICENSE"],
+  "dependencies": {}
+}
